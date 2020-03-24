@@ -67,7 +67,7 @@ class DataJson:
             data["No"] = patient["No"]
             data["リリース日"] = patient["発表日"]
             data["居住地"] = patient["住居地"]
-            data["年代・性別"] = patient["年代・性別"]
+            data["年代と性別"] = patient["年代・性別"]
             discharge_day = patient["退院日"]
             data["退院"] = "〇" if discharge_day else None
             data["date"] = patient["date"]
