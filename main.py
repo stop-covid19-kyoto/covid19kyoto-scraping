@@ -2,7 +2,7 @@ import requests
 import codecs
 
 from json import loads, dumps
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from typing import Dict
 
@@ -83,8 +83,7 @@ class DataJson:
     def make_inspections_summary(self) -> None:
         self._inspections_summary_json = {
             "last_update": self.old_data_json["patients"]["date"],
-            "data": [],
-            "label": []
+            "data": []
         }
         prev_data = {}
         for inspection in self.old_pcr_json:
@@ -93,9 +92,17 @@ class DataJson:
             data["日付"] = date.isoformat() + ".000Z"
             data["小計"] = inspection["PCR検査実施人数"]
             if prev_data:
+                prev_date = datetime.strptime("2020/" + prev_data["日付"], "%Y/%m/%d")
+                inspections_zero_days = (date - prev_date).days
+                for i in range(1, inspections_zero_days):
+                    self._inspections_summary_json["data"].append(
+                        {
+                            "日付": (prev_date + timedelta(days=i)).isoformat() + ".000Z",
+                            "小計": 0
+                        }
+                    )
                 data["小計"] -= prev_data["PCR検査実施人数"]
             self._inspections_summary_json["data"].append(data)
-            self._inspections_summary_json["label"].append(inspection["日付"])
             prev_data = inspection
 
     def make_main_summary(self) -> None:
