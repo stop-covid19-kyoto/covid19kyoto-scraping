@@ -103,7 +103,7 @@ class DataJson:
         for i in range(patients_first_cell, self.patients_count):
             discharge_day = self.patients_sheet.cell(row=i, column=10).value
             data = {
-                "No": i - 1,
+                "No": i - 2,
                 "リリース日": self.patients_sheet.cell(row=i, column=2).value,
                 "居住地": self.patients_sheet.cell(row=i, column=6).value,
                 "年代と性別": str(self.patients_sheet.cell(row=i, column=5).value).strip(),
