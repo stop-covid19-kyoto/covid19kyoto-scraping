@@ -7,20 +7,24 @@
             "value": 225,
             "children": [
                 {
-                    "attr": "症状のない方",
-                    "value": 13
+                    "attr": "入院中・入院調整中",
+                    "value": 148
                 },
                 {
-                    "attr": "症状のある方",
-                    "value": 212
+                    "attr": "宿泊施設",
+                    "value": 12
                 },
                 {
-                    "attr": "退院した方",
-                    "value": 62
+                    "attr": "自宅療養",
+                    "value": 0
                 },
                 {
-                    "attr": "亡くなられた方",
+                    "attr": "死亡",
                     "value": 3
+                },
+                {
+                    "attr": "退院・解除",
+                    "value": 62
                 }
             ]
         }
