@@ -101,13 +101,13 @@ class DataJson:
 
         # patients_sheetからデータを読み取っていく
         for i in range(patients_first_cell, self.patients_count):
-            discharge_day = self.patients_sheet.cell(row=i, column=10).value
+            discharged = self.patients_sheet.cell(row=i, column=13).value
             data = {
                 "No": i - 2,
                 "リリース日": self.patients_sheet.cell(row=i, column=2).value,
                 "居住地": self.patients_sheet.cell(row=i, column=6).value,
                 "年代と性別": str(self.patients_sheet.cell(row=i, column=5).value).strip(),
-                "退院": "〇" if discharge_day else None,
+                "退院": "〇" if discharged else None,
                 "date": self.patients_sheet.cell(row=i, column=3).value.strftime("%Y-%m-%d")
             }
             self._patients_json["data"].append(data)
@@ -230,7 +230,7 @@ class DataJson:
         # objが辞書型で"children"を持っている場合のみ実行
         if isinstance(obj, dict) and obj.get("children"):
             for child in obj["children"]:
-                # 再起させて値をセット
+                # 再帰させて値をセット
                 self.summary_values = self.summary_values[1:]
                 self.set_summary_values(child)
 
