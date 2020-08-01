@@ -20,6 +20,7 @@ class DataJson:
 
         # データ取得元のファイル
         self.patients_sheet = requests_xlsx(patients_file_url, "patients.xlsx")["covid-19-kyoto"]
+        # self.patients_sheet = openpyxl.load_workbook("")
         self.summary_sheet = requests_xlsx(summary_file_url, "summary.xlsx")["Sheet1"]
 
         # データ取得に使う変数
@@ -98,7 +99,6 @@ class DataJson:
     def make_patients(self) -> None:
         # patients.jsonのデータを作成する
         self._patients_json = self.json_template_of_patients()
-
         # patients_sheetからデータを読み取っていく
         for i in range(patients_first_cell, self.patients_count):
             discharged = self.patients_sheet.cell(row=i, column=13).value
@@ -110,6 +110,7 @@ class DataJson:
                 "退院": "〇" if discharged else None,
                 "date": self.patients_sheet.cell(row=i, column=3).value.strftime("%Y-%m-%d")
             }
+            # print(data)
             self._patients_json["data"].append(data)
 
     def make_patients_summary(self) -> None:
@@ -250,9 +251,10 @@ class DataJson:
     def get_patients(self) -> None:
         # 何行分患者のデータがあるかを取得
         while self.patients_sheet:
-            self.patients_count += 1
-            value = self.patients_sheet.cell(row=self.patients_count, column=1).value
+            self.patients_count = self.patients_count + 1
+            value = self.patients_sheet.cell(row=self.patients_count, column=2).value
             if not value:
+                self.patients_count = self.patients_count - 3
                 break
 
     def get_summaries(self) -> None:
