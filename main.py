@@ -254,7 +254,6 @@ class DataJson:
             self.patients_count = self.patients_count + 1
             value = self.patients_sheet.cell(row=self.patients_count, column=2).value
             if not value:
-                self.patients_count = self.patients_count - 3
                 break
 
     def get_summaries(self) -> None:
